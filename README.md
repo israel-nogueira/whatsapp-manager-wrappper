@@ -12,19 +12,60 @@ Uma camada de abstração (wrapper) robusta e resiliente sobre a biblioteca `wha
 * **Gerenciamento de Cache:** Organização automática de sessões usando `LocalAuth` para persistência de login.
 * **Segurança Anti-Crash:** Try-catch embutido em todos os listeners de eventos para evitar que erros de lógica derrubem o processo.
 
+Com certeza. Para um README profissional, a seção de dependências deve ser clara, separando o que é necessário para o sistema operacional (binários) do que é necessário para o projeto Node.js.
+
+Aqui está a seção de **Dependências** e **Instalação** otimizada para o seu `README.md`:
+
 ---
 
-## 🛠️ Pré-requisitos
+## 📦 Dependências e Requisitos
 
-* **Node.js** (v16 ou superior)
-* **FFmpeg** instalado no sistema (necessário para mensagens de voz/áudio)
-* As dependências instaladas:
+O projeto depende de componentes em dois níveis: bibliotecas do Node.js e ferramentas do sistema operacional para processamento de mídia.
+
+### 1. Requisitos do Sistema
+
+Para o funcionamento pleno de todas as funcionalidades (especialmente conversão de áudio e manipulação de mensagens de voz), você precisará de:
+
+* **Node.js:** Versão 16.0.0 ou superior.
+* **FFmpeg:** Essencial para o envio de mensagens de voz (`.ogg`).
+* *Windows:* O wrapper busca o binário em `./bin/ffmpeg.exe`.
+* *Linux/Mac:* Certifique-se de ter o FFmpeg instalado no `$PATH` do sistema.
+
+
+
+### 2. Dependências do Projeto (NPM)
+
+As seguintes bibliotecas são utilizadas para o core do gerenciador:
+
+| Pacote | Função |
+| --- | --- |
+| `whatsapp-web.js` | Core da comunicação com o WhatsApp Web. |
+| `axios` | Realiza o download de arquivos via URL. |
+| `fluent-ffmpeg` | Abstração para comandos do FFmpeg no Node.js. |
+| `puppeteer` | Navegador headless para execução do WhatsApp Web. |
+| `qrcode-terminal` | Exibição do QR Code de autenticação no console. |
+
+---
+
+## 🛠️ Instalação Rápida
+
+Siga os passos abaixo para preparar o ambiente:
+
 ```bash
-npm install whatsapp-web.js qrcode-terminal axios fluent-ffmpeg
+# 1. Clone o repositório
+git clone https://github.com/israel-nogueira/whatsapp-manager-wrappper.git
+cd whatsapp-manager-wrappper
+
+# 2. Instale as dependências do Node.js
+npm install whatsapp-web.js axios fluent-ffmpeg qrcode-terminal
+
+# 3. Prepare o FFmpeg (Apenas se estiver no Windows e quiser usar o binário local)
+mkdir bin
+# Cole o ffmpeg.exe dentro da pasta /bin
 
 ```
 
-
+> **Nota sobre o Puppeteer:** Ao instalar o `whatsapp-web.js`, o Puppeteer baixará automaticamente uma instância do Chromium. Certifique-se de que seu ambiente possui as bibliotecas de sistema necessárias para rodar navegadores headless (comum em servidores Linux/VPS).
 
 ---
 
@@ -61,7 +102,7 @@ async function bootstrap() {
     // Evento quando o bot está pronto
     bot.on('ready', () => {
         console.log('✅ Bot está online!');
-        bot.sendText('5541999999999', 'Olá! Sou um bot resiliente.');
+        bot.sendText('5544999999999', 'Olá! Sou um bot resiliente.');
     });
 
     // Inicia a conexão
@@ -119,8 +160,7 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 
 ---
 
-**Desenvolvido por [Seu Nome]**
+**Desenvolvido por Israel N Souza**
 
-* GitHub: [@seu-usuario](https://www.google.com/search?q=https://github.com/israel-nogueira)
-* LinkedIn: [Seu Nome](https://www.google.com/search?q=https://www.linkedin.com/in/israelnsouza)
-
+* **GitHub:** [israel-nogueira](https://github.com/israel-nogueira)
+* **LinkedIn:** [Israel Nogueira Souza](https://www.linkedin.com/in/israelnsouza)

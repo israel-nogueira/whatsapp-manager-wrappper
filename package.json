@@ -1,0 +1,26 @@
+{
+  "name": "whatsapp-manager-wrappper",
+  "version": "1.0.0",
+  "description": "Wrapper resiliente para whatsapp-web.js com suporte a múltiplas instâncias e correções de contexto.",
+  "main": "whatsapp.server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "resilient",
+    "multi-session",
+    "puppeteer",
+    "whatsapp-web.js"
+  ],
+  "author": "Israel N Souza",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.23.0"
+  }
+}
