@@ -65,19 +65,6 @@ mkdir bin
 
 ---
 
-## 🚀 Como usar
-
-### 1. Instalação
-
-Clone o repositório e instale as dependências:
-
-```bash
-git clone https://github.com/israel-nogueira/whatsapp-manager-wrappper.git
-cd whatsapp-manager-wrappper
-npm install
-
-```
-
 ## 📖 Exemplos Práticos
 
 Abaixo, veja como tirar o máximo proveito das funcionalidades exclusivas deste wrapper.
