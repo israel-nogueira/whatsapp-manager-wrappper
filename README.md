@@ -82,7 +82,13 @@ npm install
 
 ```
 
-### 2. Implementação Básica
+## 📖 Exemplos Práticos
+
+Abaixo, veja como tirar o máximo proveito das funcionalidades exclusivas deste wrapper.
+
+### 👥 1. Gerir Múltiplas Instâncias (Multi-Session)
+
+Pode rodar quantos bots a sua memória RAM permitir, cada um com a sua própria sessão isolada.
 
 ```javascript
 const WhatsAppManager = require('./whatsapp.server');
@@ -90,29 +96,111 @@ const qrcode = require('qrcode-terminal');
 
 const manager = new WhatsAppManager();
 
-async function bootstrap() {
-    // Conecta um atendente específico
-    const bot = await manager.connect('ATENDENTE_01');
+/**
+ * Função para inicializar um bot de forma independente
+ */
+async function setupBot(id) {
+    const bot = await manager.connect(id);
 
-    // Gera o QR Code no terminal
+    // Evento de QR Code para autenticação
     bot.on('qr', (qr) => {
+        console.log(`[${id}] Scan me:`);
         qrcode.generate(qr, { small: true });
     });
 
-    // Evento quando o bot está pronto
+    // Evento de Sucesso
     bot.on('ready', () => {
-        console.log('✅ Bot está online!');
-        bot.sendText('5544999999999', 'Olá! Sou um bot resiliente.');
+        console.log(`✅ Instância "${id}" está pronta para uso!`);
     });
 
-    // Inicia a conexão
     await bot.start();
+    return bot;
 }
 
-bootstrap();
+// Inicializando instâncias para diferentes setores
+(async () => {
+    const botVendas = await setupBot('VENDAS_01');
+    const botSuporte = await setupBot('SUPORTE_01');
+
+    // Cada bot pode ter a sua própria lógica de resposta
+    botVendas.on('message', msg => {
+        if (msg.body === '!promo') msg.reply('Temos 50% de desconto hoje!');
+    });
+})();
 
 ```
 
+---
+
+### 🎙️ 2. Mensagens de Voz (Conversão Automática)
+
+O wrapper utiliza o **FFmpeg** para garantir que qualquer áudio seja enviado como uma mensagem de voz nativa (gravada na hora).
+
+```javascript
+async function mandarAudio(bot, numero) {
+    const pathOriginal = './audios/boas_vindas.mp3';
+    const pathDestino = './audios/temp_voz.ogg';
+
+    // Converte e envia como PTT (Push To Talk)
+    await manager.convertToOgg(pathOriginal, pathDestino);
+    await bot.sendVoice(numero, pathDestino);
+}
+
+```
+
+---
+
+### 🖼️ 3. Envio Inteligente de Mídia
+
+Suporte para imagens únicas, álbuns (carrossel) e ficheiros via URL.
+
+```javascript
+// 📸 Enviar uma imagem simples
+await bot.sendImage('5544999999999', './media/banner.png', 'Legenda da foto');
+
+// 📚 Enviar carrossel (Várias fotos de uma vez)
+await bot.sendImage('5544999999999', [
+    './p1.jpg', 
+    './p2.jpg'
+], 'Veja o nosso catálogo!');
+
+// 🔗 Enviar documento direto da Web
+await bot.sendFileFromUrl('5544999999999', 'https://site.com/tabela.pdf', 'Aqui está o PDF');
+
+```
+
+---
+
+### 🛡️ 4. Monitorização de Grupos
+
+Mantenha a sua base de dados atualizada ou envie boas-vindas automáticas.
+
+```javascript
+bot.listnerGroup((data) => {
+    const { grupo_nome, usuario_numero, acao } = data;
+    
+    console.log(`O usuário ${usuario_numero} ${acao} no grupo ${grupo_nome}`);
+
+    if (acao === 'entrou') {
+        bot.sendText(usuario_numero, `Olá! Bem-vindo ao grupo ${grupo_nome}!`);
+    }
+});
+
+```
+
+---
+
+### 🔧 5. Verificação de Números
+
+Evite erros de envio verificando se o contacto possui WhatsApp antes de processar a lógica.
+
+```javascript
+const existe = await bot.isValidWhatsAppNumber('5544999999999');
+if (existe) {
+    await bot.sendText('5544999999999', 'Número validado com sucesso!');
+}
+
+```
 ---
 
 ## 📂 Métodos Disponíveis
