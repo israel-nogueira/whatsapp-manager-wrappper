@@ -12,10 +12,6 @@ Uma camada de abstração (wrapper) robusta e resiliente sobre a biblioteca `wha
 * **Gerenciamento de Cache:** Organização automática de sessões usando `LocalAuth` para persistência de login.
 * **Segurança Anti-Crash:** Try-catch embutido em todos os listeners de eventos para evitar que erros de lógica derrubem o processo.
 
-Com certeza. Para um README profissional, a seção de dependências deve ser clara, separando o que é necessário para o sistema operacional (binários) do que é necessário para o projeto Node.js.
-
-Aqui está a seção de **Dependências** e **Instalação** otimizada para o seu `README.md`:
-
 ---
 
 ## 📦 Dependências e Requisitos
